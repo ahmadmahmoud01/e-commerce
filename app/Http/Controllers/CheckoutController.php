@@ -14,7 +14,19 @@ class CheckoutController extends Controller
 {
     public function index() {
 
-        return view('checkout');
+        $tax = config('cart.tax') / 100;
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $discount = (int) $discount;
+        $subtotal = (int)Cart::subtotal();
+        // dd($discount);
+        $newSubtotal = $subtotal - $discount;
+
+        $newTax = $newSubtotal * $tax;
+        $newTotal = $newSubtotal * (1 + $tax);
+        // $newTotal = $newSubtotal + $tax * $newSubtotal;
+
+
+        return view('checkout', compact('tax', 'discount', 'newSubtotal', 'newTax', 'newTotal'));
 
     }
 

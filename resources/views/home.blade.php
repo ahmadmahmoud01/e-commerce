@@ -218,7 +218,7 @@
                         <a href="{{ url(route('shop.show', $product->slug)) }}">
                             <div class="product-name">{{ $product->name }}</div>
                         </a>
-                        <div class="product-price">{{ $product->presentPrice() }}</div>
+                        <div class="product-price">${{ $product->price }}</div>
                     </div>
 
                 @empty

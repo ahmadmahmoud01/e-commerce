@@ -2,7 +2,8 @@
 
 function presentPrice($price) {
 
-    return '$' . (int)$price / 100;
+    $price  = (float) $price;
+    return  number_format($price, 3, ".", 3);
 
 }
 

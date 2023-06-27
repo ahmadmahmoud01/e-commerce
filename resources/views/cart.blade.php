@@ -111,7 +111,7 @@
 
                                 </select>
                             </div>
-                            <div>{{ presentPrice($item->subtotal()) }}</div>
+                            <div>${{ $item->subtotal() }}</div>
                         </div>
                     </div> <!-- end cart-table-row -->
 
@@ -148,9 +148,9 @@
                         <span class="cart-totals-total">Total</span>
                     </div>
                     <div class="cart-totals-subtotal">
-                        {{ presentPrice(Cart::subtotal()) }} <br>
-                        {{ presentPrice(Cart::tax()) }} <br>
-                        <span class="cart-totals-total">{{ presentPrice(Cart::total()) }}</span>
+                        ${{ Cart::subtotal() }} <br>
+                        ${{ Cart::tax() }} <br>
+                        <span class="cart-totals-total">${{ Cart::total() }}</span>
                     </div>
                 </div>
             </div> <!-- end cart-totals -->
@@ -204,7 +204,7 @@
                                     <option>5</option>
                                 </select>
                             </div> --}}
-                            <div>{{ $item->model->presentPrice() }}</div>
+                            <div>{{ $item->model->price }}</div>
                         </div>
                     </div> <!-- end cart-table-row -->
 

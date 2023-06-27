@@ -23,14 +23,15 @@
 
         @if (session()->has('success'))
             <div class="spacer"></div>
-            <div class="alert alert-success">
-                {{ session()->get('success_message') }}
+            <div class="alert alert-success" style="color:rgb(0, 0, 0); padding:10px; background-color:rgb(147, 191, 160);">
+                {{ session()->get('success') }}
             </div>
+            <div></div>
         @endif
 
         @if(count($errors) > 0)
             <div class="spacer"></div>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" style="color:rgb(161, 55, 55); padding:10px; background-color: #f69c9c" >
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -143,7 +144,7 @@
                                 <div class="checkout-item-details">
                                     <div class="checkout-table-item">{{ $item->model->name }}</div>
                                     <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                    <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
+                                    <div class="checkout-table-price">${{ ($item->model->price) / 100 }}</div>
                                 </div>
                             </div> <!-- end checkout-table -->
 
@@ -160,30 +161,53 @@
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
                         Subtotal <br>
-                        {{--  Discount (10OFF - 10%) <br>  --}}
+                        @if(session()->has('coupon'))
+
+                            Discount ({{ session()->get('coupon')['name'] }})
+
+                            <form action="{{ route('coupon.destroy') }}" method="post" style="display: inline; font-size: 14px">
+                                @csrf
+                                @method('delete')
+
+                                <button type="submit">remove</button>
+
+                            </form><br>
+                            <hr>
+                            New subtotal <br>
+
+                        @endif
+
                         Tax(14%) <br>
                         <span class="checkout-totals-total">Total</span>
 
                     </div>
 
                     <div class="checkout-totals-right">
-                        {{ presentPrice(Cart::subtotal()) }}<br>
-                        {{--  -$750.00 <br>  --}}
-                        {{ presentPrice(Cart::tax()) }}<br>
-                        <span class="checkout-totals-total">{{ presentPrice(Cart::total()) }}</span>
+                        ${{ (int)Cart::subtotal() }}<br>
+                        @if(session()->has('coupon'))
+                            -${{ $discount }}  <br>
+                            <hr>
+
+                        ${{ $newSubtotal }} <br>
+                        @endif
+                        ${{ $newTax }}<br>
+                        <span class="checkout-totals-total">${{ $newTotal }}</span>
+                        {{--  <span class="checkout-totals-total">{{ presentPrice(Cart::total()) }}</span>  --}}
 
                     </div>
                 </div> <!-- end checkout-totals -->
 
-                <a href="#" class="have-code">Have a Code?</a>
+                @if(! session()->get('coupon'))
+                        <a href="#" class="have-code">Have a Code?</a>
 
-            <div class="have-code-container" style="margin: 30px">
-                <form action="{{ route('coupon.store') }}" method="post">
-                    @csrf
-                    <input type="text" style="height: 50px">
-                    <button type="submit" class="button button-plain">Apply</button>
-                </form>
-            </div> <!-- end have-code-container -->
+                    <div class="have-code-container" style="margin: 30px">
+                        <form action="{{ route('coupon.store') }}" method="post">
+                            @csrf
+                            <input type="text" style="height: 50px" name="coupon_code" id="coupon_code">
+                            <button type="submit" class="button button-plain">Apply</button>
+                        </form>
+                    </div> <!-- end have-code-container -->
+                @endif
 
             </div>
 

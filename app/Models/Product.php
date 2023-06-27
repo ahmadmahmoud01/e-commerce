@@ -13,9 +13,9 @@ class Product extends Model
 
 
 
-    function presentPrice() {
+    public function presentPrice() {
 
-        return  '$' . $this->price / 100;
+        return  '$' . ($this->price / 100);
 
     }
 

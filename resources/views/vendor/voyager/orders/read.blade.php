@@ -48,7 +48,7 @@
                             <hr>
                                 <li>id : {{ $product->id }}</li>
                                 <li>name: {{ $product->name }}</li>
-                                <li>price: {{ $product->presentPrice() }}</li>
+                                <li>price: ${{ $product->price }}</li>
                                 <li>quantity: {{ $product->pivot->quantity }}</li>
                             @endforeach
                         </div>
