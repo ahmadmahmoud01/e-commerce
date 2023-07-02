@@ -20,6 +20,9 @@ class CheckoutController extends Controller
         $subtotal = (int)Cart::subtotal();
         // dd($discount);
         $newSubtotal = $subtotal - $discount;
+        if($newSubtotal < 0) {
+            $newSubtotal = 0;
+        }
 
         $newTax = $newSubtotal * $tax;
         $newTotal = $newSubtotal * (1 + $tax);
