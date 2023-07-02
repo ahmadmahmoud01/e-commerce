@@ -8,7 +8,7 @@
                 <a href="{{ url(route('shop.show', $product->slug)) }}" class="might-like-product">
                     <img src="{{ productImage($product->image) }}" alt="product">
                     <div class="might-like-product-name">{{ $product->name }}</div>
-                    <div class="might-like-product-price">${{ $product->price }}</div>
+                    <div class="might-like-product-price">${{ number_format($product->price, 2) }}</div>
                 </a>
 
             @empty

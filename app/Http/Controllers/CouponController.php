@@ -18,7 +18,7 @@ class CouponController extends Controller
 
         session()->put('coupon', [
             'name' => $coupon->code,
-            'discount' => $coupon->discount((int)Cart::subtotal())
+            'discount' => $coupon->discount(floatVal(Cart::subtotal()))
         ]);
 
         // $newSubtotal = Cart::subtotal() - session()->get('coupon')['discount'];

@@ -144,7 +144,7 @@
                                 <div class="checkout-item-details">
                                     <div class="checkout-table-item">{{ $item->model->name }}</div>
                                     <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                    <div class="checkout-table-price">${{ ($item->model->price) / 100 }}</div>
+                                    <div class="checkout-table-price">${{ ($item->model->price) / 1000 }}</div>
                                 </div>
                             </div> <!-- end checkout-table -->
 
@@ -183,15 +183,15 @@
                     </div>
 
                     <div class="checkout-totals-right">
-                        ${{ (int)Cart::subtotal() }}<br>
+                        ${{ floatVal(Cart::subtotal()) }}<br>
                         @if(session()->has('coupon'))
                             -${{ $discount }}  <br>
                             <hr>
 
-                        ${{ $newSubtotal }} <br>
+                        ${{ number_format($newSubtotal, 2) }} <br>
                         @endif
-                        ${{ $newTax }}<br>
-                        <span class="checkout-totals-total">${{ $newTotal }}</span>
+                        ${{ number_format($newTax, 2) }}<br>
+                        <span class="checkout-totals-total">${{ number_format($newTotal, 2) }}</span>
                         {{--  <span class="checkout-totals-total">{{ presentPrice(Cart::total()) }}</span>  --}}
 
                     </div>
